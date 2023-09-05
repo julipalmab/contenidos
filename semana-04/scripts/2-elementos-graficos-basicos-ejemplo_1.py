@@ -1,57 +1,57 @@
 import sys
-from PyQt6.QtWidgets import (QApplication, QWidget, QLabel, QPushButton,
-                             QGridLayout, QVBoxLayout)
+from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit
 
 
 class MiVentana(QWidget):
+
     def __init__(self, *args, **kwargs):
+        """
+        Este método inicializa la ventana.
+        """
         super().__init__(*args, **kwargs)
+        
+        # Llamamos a un método propio que inicializa los elementos de la ventana
         self.init_gui()
 
     def init_gui(self):
-
-        # Creamos una etiqueta para status. Recordar que los widgets simples
-        # no tienen StatusBar.
-        self.label = QLabel('Status:', self)
-
-        # Creamos la grilla para ubicar los widgets de manera matricial
-        self.grilla = QGridLayout()
-
-        valores = ['1', '2', '3',
-                   '4', '5', '6',
-                   '7', '8', '9',
-                   '0', 'CE', 'C']
-
-        # Generamos las posiciones de los botones en la grilla y le asociamos
-        # el texto que debe desplegar cada botón guardados en la lista valores
-        posiciones = [(i, j) for i in range(4) for j in range(3)]
+        """
+        Este método configura la interfaz y todos sus widgets,
+        posterior a __init__().
+        """
+        # Ajustamos la geometría de la ventana y su título
+        self.setGeometry(200, 100, 200, 300)
+        self.setWindowTitle('Ventana con label y cuadro de texto')
         
-        for posicion, valor in zip(posiciones, valores):
-            boton = QPushButton(valor, self)
-            self.grilla.addWidget(boton, *posicion)
+        # Agregamos etiquetas usando el widget QLabel(texto_inicial, padre)
+        self.label1 = QLabel('Texto:', self)
+        self.label1.move(10, 15)
 
-        # Creamos un layout vertical
-        vbox = QVBoxLayout()
+        self.label2 = QLabel('Esta etiqueta es variable', self)
+        self.label2.move(10, 50)
 
-        # Agregamos el label al layout con addWidget
-        vbox.addWidget(self.label)
+        # Agregamos cuadros de texto mediante QLineEdit(texto_inicial, padre)
+        self.edit = QLineEdit('', self)
+        self.edit.setGeometry(45, 15, 100, 20)
 
-        # Agregamos el layout de la grilla al layout vertical con addLayout
-        vbox.addLayout(self.grilla)
-        self.setLayout(vbox)
-
-        self.move(300, 150)
-        self.setWindowTitle('Calculator')
+        # Una vez que fueron agregados todos los elementos a la ventana la
+        # desplegamos en pantalla
+        self.show()
 
 
 if __name__ == '__main__':
     def hook(type, value, traceback):
         print(type)
         print(traceback)
-
     sys.__excepthook__ = hook
-    
+
+    """
+    Recordar que en el programa principal debe existir una instancia de
+    QApplication ANTES de crear los demas widgets, incluida la ventana
+    principal.
+    Si la aplicación no recibe parámetros desde la línea de comandos,
+    QApplication recibe una lista vacia como QApplication([]).
+    """
+
     app = QApplication([])
     form = MiVentana()
-    form.show()
     sys.exit(app.exec())

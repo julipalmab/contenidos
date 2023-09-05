@@ -1,10 +1,8 @@
 import sys
-import os
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton
+
 
 class MiVentana(QWidget):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.init_gui()
@@ -13,32 +11,32 @@ class MiVentana(QWidget):
         """
         Este método inicializa la interfaz y todos sus widgets.
         """
-        
-        # Ajustamos la geometría de la ventana y su título
-        self.setGeometry(200, 100, 200, 200)
-        self.setWindowTitle('Ventana con imagen')
-        
-        
-        # Creamos el QLabel que contendrá la imagen y definimos su tamaño
-        self.label = QLabel(self)
-        self.label.setGeometry(50, 50, 100, 100)
-        
-        # Escribimos la ruta al archivo que contiene la imagen.
-        # La imagen obtenida en https://en.wikipedia.org/wiki/Python_(genus)
-        ruta_imagen = os.path.join('img', 'python.jpg')
-        
-        # Cargamos la imagen como pixeles 
-        pixeles = QPixmap(ruta_imagen)
-        
-        # Agregamos los pixeles al elemento QLabel
-        self.label.setPixmap(pixeles)
-        
-        # Finalmente, ajustamos tamaño de contenido al tamaño del elemento (100 x 100)
-        self.label.setScaledContents(True)
-        
-        
-        # Una vez que fueron agregados
-        # todos los elementos a la ventana la
+
+        # Ajustamos la geometria de la ventana
+        self.setGeometry(200, 100, 200, 300)
+        self.setWindowTitle('Ventana con botón')
+
+        # Podemos agrupar conjuntos de widgets en alguna estructura
+        self.labels = {}
+        self.labels['label1'] = QLabel('Texto:', self)
+        self.labels['label1'].move(10, 15)
+        self.labels['label2'] = QLabel('Aquí se escribe la respuesta', self)
+        self.labels['label2'].move(10, 50)
+
+        self.edit1 = QLineEdit('', self)
+        self.edit1.setGeometry(45, 15, 100, 20)
+
+        """
+        El uso del caracter & al inicio del texto de algún botón o menú permite
+        que la primera letra del mensaje mostrado esté destacada. La
+        visualización depende de la plataforma utilizada.
+        El método sizeHint provee un tamaño sugerido para el botón.        
+        """
+        self.boton1 = QPushButton('&Procesar', self)
+        self.boton1.resize(self.boton1.sizeHint())
+        self.boton1.move(5, 70)
+
+        # Una vez que fueron agregados todos los elementos a la ventana la
         # desplegamos en pantalla
         self.show()
 
@@ -47,8 +45,10 @@ if __name__ == '__main__':
     def hook(type, value, traceback):
         print(type)
         print(traceback)
+
     sys.__excepthook__ = hook
 
     app = QApplication([])
-    ventana = MiVentana()
+    form = MiVentana()
+    form.show()
     sys.exit(app.exec())
