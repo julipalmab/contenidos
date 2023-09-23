@@ -22,6 +22,6 @@ if __name__ == '__main__':
 
     app = QApplication([])    ## Creamos ls base de la app: QApplication
     ventana = MiVentana()     ## Construirmos un QWidget que será nuestra ventana
-    #ventana.show()            ## Mostramos la ventna
-    app.exec()      ## La aplicación se inicia con app.exec(). Esto habilita el loop de eventos
+    ventana.show()            ## Mostramos la ventna
+    sys.exit(app.exec())      ## La aplicación se inicia con app.exec(). Esto habilita el loop de eventos
                               ## Su valor de retorno es un código de salida que luego lo tome sys.exit()
