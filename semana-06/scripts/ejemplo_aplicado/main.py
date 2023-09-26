@@ -4,8 +4,8 @@ import sys
 import parametros_general as p
 
 # Usar Uno de los 2 "Juego".
-from backend.logica_qthread import Juego
-# from backend.logica_qtimer import Juego
+# from backend.logica_qthread import Juego
+from backend.logica_qtimer import Juego
 
 
 class Simulacion:
